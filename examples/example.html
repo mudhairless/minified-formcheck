@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>FormCheck Test</title>
+		<link rel="stylesheet" href="../themes/dark/dark.css" type="text/css" />
+		<style>
+			body {
+				background-color: #ccc;
+			}
+			#checkme {
+				width: 50%;
+				margin: 150px auto;
+			}
+			.formitem {
+				margin: 15px 0;
+				background-color: #fff;
+				border-radius: 10px;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<form id="checkme" method="post" action="example.html">
+			<div class="formitem">
+	    	<label for="name">Name</label>
+				<input tabindex="1" type="text" required="required" data-validate="alpha" placeholder="Your Name" name="name" id="name" />
+			</div>
+			<div class="formitem">
+	      <label for="phone">phone</label>
+				<input tabindex="2" type="text" data-validate="phone" minlength="7" required="required" placeholder="Phone Number" name="phone" id="phone" />
+			</div>
+			<div class="formitem">
+	      <label for="email">email</label>
+				<input tabindex="3" type="email" required="required" name="email" id="email" placeholder="Email Address" />
+			</div>
+			<div class="formitem">
+	      <label for="zipcode">zipcode</label>
+				<input tabindex="4" type="text" required="required" minlength="5" maxlength="9" data-validate="%zipCheck" placeholder="Zip Code" name="zipcode" id="zipcode" />
+			</div>
+			<div class="formitem">
+	      <label for="hexnumber">hex number</label>
+				<input tabindex="5" type="text" name="hexnumber" id="hexnumber" pattern="^(0x)?[0-9a-fA-F]+$" data-invalid-message="Valid Hex Numbers are 0-9, A-F with an optional 0x prefix." placeholder="Hex Number" />
+			</div>
+			<div class="formitem">
+	      <label for="dropdown">dropdown</label>
+	      <select id="dropdown" name="dropdown" required tabindex="6">
+	      	<option value="">No Option</option>
+	        <option value="1">First Option</option>
+	        <option value="2">Second Option</option>
+	      </select>
+			</div>
+			<div class="formitem">
+	      <label for="multiple">Multiple</label>
+	      <select multiple="multiple" name="multiple" id="multiple" required tabindex="7">
+	      	<option value="1">Option 1</option>
+	        <option value="2">Option 2</option>
+	        <option value="3">Option 3</option>
+	        <option value="4">Option 4</option>
+	      </select>
+			</div>
+			<div class="formitem">
+	      <input type="radio" required="required" value="1" id="radio1" name="radiog" tabindex="8" /><label for="radio1">Radio 1</label>
+	      <input type="radio" required="required" value="2" id="radio2" name="radiog" tabindex="9" /><label for="radio2">Radio 2</label>
+	      <input type="radio" required="required" value="3" id="radio3" name="radiog" tabindex="10" /><label for="radio3">Radio 3</label>
+			</div>
+			<div class="formitem">
+	      <label for="password">password</label>
+				<input tabindex="11" placeholder="Password" type="text" required="required" minlength="6" name="password" id="password" />
+			</div>
+			<div class="formitem">
+	      <label for="cpassword">confirm password</label>
+				<input tabindex="12" type="text" required="required" data-validate="matches:password" placeholder="Confirm password" name="cpassword" id="cpassword" />
+			</div>
+			<div class="formitem">
+	      <label for="secret1">Question</label>
+				<input tabindex="13" placeholder="secret1" type="text" required="required" placeholder="Secret Question" name="secret1" id="secret1" />
+			</div>
+			<div class="formitem">
+	      <label for="secret2">Answer</label>
+				<input type="text" tabindex="14" required="required" data-validate="differs:secret1" placeholder="Secret Answer" name="secret2" id="secret2" />
+			</div>
+			<div class="formitem">
+	      <label for="terms">Accept our terms?</label>
+	      <input type="checkbox" required="required" tabindex="15" data-invalid-message="You must accept our terms." value="Y" name="terms" id="terms" />
+			</div>
+			<div class="formitem">
+	      <input type="submit" value="Check" tabindex="16" />
+			</div>
+	  </form>
+		<script type="text/javascript" src="minified.js"></script>
+		<script type="text/javascript" src="../bin/formcheck.min.js"></script>
+		<script type="text/javascript">
+			var MINI = require('minified'), $ = MINI.$, $$ = MINI.$$, EE = MINI.EE, _ = MINI._;
+			require('formCheck');
+			var fc;
+			$.ready(function() {
+				fc = $.validate('#checkme');
+				$('#checkme').on('formisvalid',function(formSelector) {
+					console.log('form is valid');
+				});
+
+				$('#checkme').on('formisinvalid',function(invalidElement,formSelector) {
+					console.log('form is invalid');
+				});
+			});
+
+			function zipCheck(el) {
+				var elVal = el.get('value');
+				if(elVal.length == 5 || elVal.length == 9) {
+					return true;
+				} else {
+					el.get('errors').push('Zip code fail!');
+					return false;
+				}
+			}
+		</script>
+	</body>
+</html>
