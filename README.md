@@ -271,3 +271,12 @@ like to override or add to built-in validations.
 * __setFocusToInvalid__ _Boolean_ _Default Value: true_
 
   Should the focus be set to the invalid form element.
+
+  
+## License
+
+MIT License, Copyright 2015 Ebben Feagan, see LICENSE.txt for details.
+
+## Acknowledgements
+
+Originally commissioned for Skynet Solutions http://www.skynet-solutions.net
